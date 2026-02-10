@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Database, Play, Loader2, Table, History } from 'lucide-react';
+import { sqlGenerate, sqlExecute } from '../lib/api';
 
 interface QueryResult {
   query: string;
@@ -13,66 +14,55 @@ export default function TextToSQL() {
   const [executing, setExecuting] = useState(false);
   const [currentResult, setCurrentResult] = useState<QueryResult | null>(null);
   const [history, setHistory] = useState<QueryResult[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const handleExecuteQuery = async () => {
     if (!query.trim() || executing) return;
 
     setExecuting(true);
+    setError(null);
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/text-to-sql`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          },
-          body: JSON.stringify({
-            query: query,
-          }),
-        }
-      );
+      // Step 1: Generate SQL from natural language
+      const genData = await sqlGenerate(query);
 
-      const data = await response.json();
+      if (!genData.safe) {
+        setError('The generated SQL was flagged as unsafe and cannot be executed.');
+        setCurrentResult({
+          query,
+          sql: genData.generated_sql,
+          results: [],
+          timestamp: new Date(),
+        });
+        setExecuting(false);
+        return;
+      }
+
+      // Step 2: Execute the generated SQL
+      const execData = await sqlExecute(genData.generated_sql);
+
+      // Map column/row arrays into objects for the table UI
+      const mappedResults = execData.rows.map((row) => {
+        const obj: Record<string, unknown> = {};
+        execData.columns.forEach((col, i) => {
+          obj[col] = (row as unknown[])[i];
+        });
+        return obj;
+      });
 
       const result: QueryResult = {
         query,
-        sql: data.sql || 'Unable to generate SQL',
-        results: data.results || [],
+        sql: genData.generated_sql,
+        results: mappedResults,
         timestamp: new Date(),
       };
 
       setCurrentResult(result);
       setHistory((prev) => [result, ...prev].slice(0, 10));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred while executing the query.');
+    } finally {
       setExecuting(false);
-    } catch (error) {
-      setExecuting(false);
-
-      const fallbackSQL = `SELECT u.email, COUNT(d.id) as document_count,
-       MAX(d.upload_date) as last_upload
-FROM users u
-LEFT JOIN pdf_documents d ON u.id = d.user_id
-WHERE u.created_at >= NOW() - INTERVAL '30 days'
-GROUP BY u.email
-ORDER BY document_count DESC
-LIMIT 10;`;
-
-      const fallbackResults = [
-        { email: 'user1@example.com', document_count: 12, last_upload: '2024-10-07' },
-        { email: 'user2@example.com', document_count: 8, last_upload: '2024-10-06' },
-        { email: 'user3@example.com', document_count: 5, last_upload: '2024-10-05' },
-      ];
-
-      const result: QueryResult = {
-        query,
-        sql: fallbackSQL,
-        results: fallbackResults,
-        timestamp: new Date(),
-      };
-
-      setCurrentResult(result);
-      setHistory((prev) => [result, ...prev].slice(0, 10));
     }
   };
 
@@ -231,6 +221,12 @@ LIMIT 10;`;
               </div>
             </div>
           </div>
+
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
+              <p className="text-sm text-red-700">{error}</p>
+            </div>
+          )}
 
           {currentResult && (
             <>

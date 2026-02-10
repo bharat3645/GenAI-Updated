@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { Upload, FileText, Loader2, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { atsAnalyze } from '../lib/api';
 
 interface FeedbackResult {
   atsScore: number;
@@ -30,41 +31,27 @@ export default function ResumeFeedback() {
 
     setAnalyzing(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    try {
+      // Read file content as text
+      const text = await file.text();
+      const data = await atsAnalyze(text, jobDescription);
+      const report = data.report;
 
-    const mockResult: FeedbackResult = {
-      atsScore: 78,
-      keywordsFound: [
-        'Project Management',
-        'Agile',
-        'Scrum',
-        'Leadership',
-        'Cross-functional Teams',
-        'Stakeholder Management',
-      ],
-      keywordsMissing: ['Risk Management', 'Budget Planning', 'KPI Tracking', 'Change Management'],
-      strengths: [
-        'Strong action verbs used throughout',
-        'Quantifiable achievements clearly stated',
-        'Relevant experience well-highlighted',
-        'Education section properly formatted',
-      ],
-      improvements: [
-        'Add more metrics to demonstrate impact',
-        'Include specific software proficiencies',
-        'Expand on leadership responsibilities',
-        'Add professional certifications if available',
-      ],
-      formatting: [
-        'Clean, professional layout',
-        'Consistent font usage',
-        'Proper use of bullet points',
-        'Contact information clearly visible',
-      ],
-    };
+      const mappedResult: FeedbackResult = {
+        atsScore: report.score || 0,
+        keywordsFound: report.keywords_found || [],
+        keywordsMissing: report.keywords_missing || [],
+        strengths: report.action_verbs_found || [],
+        improvements: report.content_suggestions || [],
+        formatting: report.formatting_issues || [],
+      };
 
-    setResult(mockResult);
-    setAnalyzing(false);
+      setResult(mappedResult);
+    } catch (error) {
+      console.error('ATS analysis failed:', error);
+    } finally {
+      setAnalyzing(false);
+    }
   };
 
   const getScoreColor = (score: number) => {
@@ -73,11 +60,6 @@ export default function ResumeFeedback() {
     return 'text-red-600';
   };
 
-  const getScoreBgColor = (score: number) => {
-    if (score >= 80) return 'bg-green-100';
-    if (score >= 60) return 'bg-orange-100';
-    return 'bg-red-100';
-  };
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -220,13 +202,12 @@ export default function ResumeFeedback() {
             </div>
             <div className="w-full bg-gray-200 rounded-full h-4">
               <div
-                className={`h-4 rounded-full ${
-                  result.atsScore >= 80
-                    ? 'bg-green-600'
-                    : result.atsScore >= 60
+                className={`h-4 rounded-full ${result.atsScore >= 80
+                  ? 'bg-green-600'
+                  : result.atsScore >= 60
                     ? 'bg-orange-600'
                     : 'bg-red-600'
-                }`}
+                  }`}
                 style={{ width: `${result.atsScore}%` }}
               />
             </div>
@@ -234,8 +215,8 @@ export default function ResumeFeedback() {
               {result.atsScore >= 80
                 ? 'Excellent! Your resume is well-optimized for ATS systems.'
                 : result.atsScore >= 60
-                ? 'Good, but there is room for improvement.'
-                : 'Your resume needs significant optimization for ATS systems.'}
+                  ? 'Good, but there is room for improvement.'
+                  : 'Your resume needs significant optimization for ATS systems.'}
             </p>
           </div>
 

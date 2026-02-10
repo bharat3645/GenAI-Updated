@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { Mail, Lock, Loader2 } from 'lucide-react';
+import { Mail, Lock, Loader2, UserIcon } from 'lucide-react';
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { signIn, signUp } = useAuth();
@@ -16,12 +17,12 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const { error } = isLogin
+      const result = isLogin
         ? await signIn(email, password)
-        : await signUp(email, password);
+        : await signUp(email, password, displayName);
 
-      if (error) {
-        setError(error.message);
+      if (result.error) {
+        setError(result.error);
       }
     } catch (err) {
       setError('An unexpected error occurred');
@@ -45,6 +46,25 @@ export default function LoginPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            {!isLogin && (
+              <div>
+                <label htmlFor="displayName" className="block text-sm font-medium text-gray-700 mb-2">
+                  Display Name
+                </label>
+                <div className="relative">
+                  <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <input
+                    id="displayName"
+                    type="text"
+                    value={displayName}
+                    onChange={(e) => setDisplayName(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder="Your name"
+                  />
+                </div>
+              </div>
+            )}
+
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address

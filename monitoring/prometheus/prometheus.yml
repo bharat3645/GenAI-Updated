@@ -1,0 +1,53 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # ── API Gateway ──────────────────────────────────────────
+  - job_name: "api-gateway"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["host.docker.internal:8000"]
+        labels:
+          service: "api-gateway"
+
+  # ── PDF RAG Service ──────────────────────────────────────
+  - job_name: "pdf-rag-service"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["pdf-rag-service:8001"]
+        labels:
+          service: "pdf-rag-service"
+
+  # ── ATS Agent Service ────────────────────────────────────
+  - job_name: "ats-agent-service"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["ats-agent-service:8002"]
+        labels:
+          service: "ats-agent-service"
+
+  # ── Research Service ─────────────────────────────────────
+  - job_name: "research-service"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["research-service:8003"]
+        labels:
+          service: "research-service"
+
+  # ── SQL Service ──────────────────────────────────────────
+  - job_name: "sql-service"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["sql-service:8004"]
+        labels:
+          service: "sql-service"
+
+  # ── Infrastructure ───────────────────────────────────────
+  - job_name: "postgres"
+    static_configs:
+      - targets: ["postgres-exporter:9187"]
+
+  - job_name: "redis"
+    static_configs:
+      - targets: ["redis-exporter:9121"]

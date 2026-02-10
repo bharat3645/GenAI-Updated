@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: genai-config
+  namespace: genai-platform
+data:
+  OLLAMA_BASE_URL: "http://ollama:11434"
+  OLLAMA_MODEL: "llama3"
+  OLLAMA_EMBED_MODEL: "nomic-embed-text"
+  POSTGRES_HOST: "postgres"
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: "genai_platform"
+  REDIS_URL: "redis://redis:6379/0"
+  QDRANT_HOST: "qdrant"
+  QDRANT_PORT: "6333"
+  QDRANT_COLLECTION: "pdf_chunks"
+  NEO4J_URI: "bolt://neo4j:7687"
+  NEO4J_USER: "neo4j"
+  GATEWAY_PORT: "8000"
+  RAG_SERVICE_PORT: "8001"
+  ATS_SERVICE_PORT: "8002"
+  RESEARCH_SERVICE_PORT: "8003"
+  SQL_SERVICE_PORT: "8004"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: genai-secrets
+  namespace: genai-platform
+type: Opaque
+stringData:
+  POSTGRES_USER: "genai"
+  POSTGRES_PASSWORD: "genai_secret_2024"
+  DATABASE_URL: "postgresql://genai:genai_secret_2024@postgres:5432/genai_platform"
+  NEO4J_PASSWORD: "neo4j_secret_2024"
+  JWT_SECRET: "change-me-to-a-random-64-char-string"
+  TAVILY_API_KEY: ""
+  SERPER_API_KEY: ""

@@ -1,0 +1,274 @@
+# ── API Gateway ──────────────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  namespace: genai-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+    spec:
+      containers:
+        - name: api-gateway
+          image: genai-platform/api-gateway:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: genai-config
+            - secretRef:
+                name: genai-secrets
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 30
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway
+  namespace: genai-platform
+spec:
+  type: LoadBalancer
+  selector:
+    app: api-gateway
+  ports:
+    - port: 8000
+      targetPort: 8000
+
+---
+# ── PDF RAG Service ──────────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdf-rag-service
+  namespace: genai-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pdf-rag-service
+  template:
+    metadata:
+      labels:
+        app: pdf-rag-service
+    spec:
+      containers:
+        - name: pdf-rag-service
+          image: genai-platform/pdf-rag-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8001
+          envFrom:
+            - configMapRef:
+                name: genai-config
+            - secretRef:
+                name: genai-secrets
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8001
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pdf-rag-service
+  namespace: genai-platform
+spec:
+  selector:
+    app: pdf-rag-service
+  ports:
+    - port: 8001
+
+---
+# ── ATS Agent Service ───────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ats-agent-service
+  namespace: genai-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ats-agent-service
+  template:
+    metadata:
+      labels:
+        app: ats-agent-service
+    spec:
+      containers:
+        - name: ats-agent-service
+          image: genai-platform/ats-agent-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8002
+          envFrom:
+            - configMapRef:
+                name: genai-config
+            - secretRef:
+                name: genai-secrets
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8002
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ats-agent-service
+  namespace: genai-platform
+spec:
+  selector:
+    app: ats-agent-service
+  ports:
+    - port: 8002
+
+---
+# ── Research Service ────────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: research-service
+  namespace: genai-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: research-service
+  template:
+    metadata:
+      labels:
+        app: research-service
+    spec:
+      containers:
+        - name: research-service
+          image: genai-platform/research-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8003
+          envFrom:
+            - configMapRef:
+                name: genai-config
+            - secretRef:
+                name: genai-secrets
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8003
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: research-service
+  namespace: genai-platform
+spec:
+  selector:
+    app: research-service
+  ports:
+    - port: 8003
+
+---
+# ── SQL Service ─────────────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sql-service
+  namespace: genai-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sql-service
+  template:
+    metadata:
+      labels:
+        app: sql-service
+    spec:
+      containers:
+        - name: sql-service
+          image: genai-platform/sql-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8004
+          envFrom:
+            - configMapRef:
+                name: genai-config
+            - secretRef:
+                name: genai-secrets
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8004
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sql-service
+  namespace: genai-platform
+spec:
+  selector:
+    app: sql-service
+  ports:
+    - port: 8004

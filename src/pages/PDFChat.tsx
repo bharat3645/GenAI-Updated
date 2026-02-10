@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { Upload, Send, FileText, X, Loader2, MessageSquare } from 'lucide-react';
+import { ragIngest, ragQuery } from '../lib/api';
 
 interface Message {
   id: string;
@@ -14,6 +15,7 @@ export default function PDFChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
+  const [documentIds, setDocumentIds] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,33 +29,23 @@ export default function PDFChat() {
     setUploading(true);
 
     try {
-      const formData = new FormData();
-      files.forEach((file) => {
-        formData.append('files', file);
-      });
+      const results = [];
+      for (const file of files) {
+        const result = await ragIngest(file);
+        results.push(result);
+        setDocumentIds((prev) => [...prev, result.document_id]);
+      }
 
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/process-pdf`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          },
-          body: formData,
-        }
-      );
-
-      const data = await response.json();
       setUploading(false);
+
+      const totalChunks = results.reduce((sum, r) => sum + r.chunk_count, 0);
+      const totalEntities = results.reduce((sum, r) => sum + r.entity_count, 0);
 
       const assistantMessage: Message = {
         id: Date.now().toString(),
         role: 'assistant',
-        content:
-          data.message ||
-          `Successfully processed ${files.length} PDF document${
-            files.length > 1 ? 's' : ''
-          }. The documents have been chunked and indexed for semantic search. You can now ask questions about the content.`,
+        content: `Successfully processed ${files.length} PDF document${files.length > 1 ? 's' : ''
+          }. Created ${totalChunks} chunks and extracted ${totalEntities} entities for the knowledge graph. You can now ask questions about the content.`,
         timestamp: new Date(),
       };
       setMessages([assistantMessage]);
@@ -62,7 +54,7 @@ export default function PDFChat() {
       const errorMessage: Message = {
         id: Date.now().toString(),
         role: 'assistant',
-        content: 'Error processing PDFs. Please try again.',
+        content: `Error processing PDFs: ${error instanceof Error ? error.message : 'Please try again.'}`,
         timestamp: new Date(),
       };
       setMessages([errorMessage]);
@@ -84,34 +76,18 @@ export default function PDFChat() {
     };
 
     setMessages((prev) => [...prev, userMessage]);
+    const currentInput = input;
     setInput('');
     setSending(true);
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/rag-chat`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          },
-          body: JSON.stringify({
-            query: input,
-            documentIds: files.map((_, i) => `doc_${i}`),
-          }),
-        }
-      );
-
-      const data = await response.json();
+      const data = await ragQuery(currentInput, documentIds);
       setSending(false);
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content:
-          data.response ||
-          `Based on the uploaded documents, I found relevant information about "${input}". The system uses RAG (Retrieval-Augmented Generation) to search through document chunks and GraphRAG to understand entity relationships. This ensures accurate, context-aware responses.`,
+        content: data.answer,
         timestamp: new Date(),
       };
 
@@ -121,7 +97,7 @@ export default function PDFChat() {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: 'Error processing your question. Please try again.',
+        content: `Error: ${error instanceof Error ? error.message : 'Please try again.'}`,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -251,11 +227,10 @@ export default function PDFChat() {
                   className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[80%] rounded-lg px-4 py-3 ${
-                      message.role === 'user'
+                    className={`max-w-[80%] rounded-lg px-4 py-3 ${message.role === 'user'
                         ? 'bg-blue-600 text-white'
                         : 'bg-gray-100 text-gray-900'
-                    }`}
+                      }`}
                   >
                     <p className="text-sm">{message.content}</p>
                     <span className="text-xs opacity-70 mt-1 block">

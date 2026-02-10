@@ -1,0 +1,217 @@
+# ── PostgreSQL ───────────────────────────────────────────────────
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: genai-platform
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15-alpine
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: genai-config
+            - secretRef:
+                name: genai-secrets
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: genai-platform
+spec:
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+  clusterIP: None
+
+---
+# ── Redis ────────────────────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: genai-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7-alpine
+          ports:
+            - containerPort: 6379
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: genai-platform
+spec:
+  selector:
+    app: redis
+  ports:
+    - port: 6379
+
+---
+# ── Qdrant ───────────────────────────────────────────────────────
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: qdrant
+  namespace: genai-platform
+spec:
+  serviceName: qdrant
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qdrant
+  template:
+    metadata:
+      labels:
+        app: qdrant
+    spec:
+      containers:
+        - name: qdrant
+          image: qdrant/qdrant:latest
+          ports:
+            - containerPort: 6333
+            - containerPort: 6334
+          volumeMounts:
+            - name: qdrant-data
+              mountPath: /qdrant/storage
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+  volumeClaimTemplates:
+    - metadata:
+        name: qdrant-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qdrant
+  namespace: genai-platform
+spec:
+  selector:
+    app: qdrant
+  ports:
+    - name: http
+      port: 6333
+    - name: grpc
+      port: 6334
+
+---
+# ── Neo4j ────────────────────────────────────────────────────────
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: neo4j
+  namespace: genai-platform
+spec:
+  serviceName: neo4j
+  replicas: 1
+  selector:
+    matchLabels:
+      app: neo4j
+  template:
+    metadata:
+      labels:
+        app: neo4j
+    spec:
+      containers:
+        - name: neo4j
+          image: neo4j:5-community
+          ports:
+            - containerPort: 7474
+            - containerPort: 7687
+          env:
+            - name: NEO4J_server_config_strict__validation_enabled
+              value: "false"
+            - name: NEO4J_AUTH
+              value: "neo4j/neo4j_secret_2024"
+          volumeMounts:
+            - name: neo4j-data
+              mountPath: /data
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
+  volumeClaimTemplates:
+    - metadata:
+        name: neo4j-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: neo4j
+  namespace: genai-platform
+spec:
+  selector:
+    app: neo4j
+  ports:
+    - name: http
+      port: 7474
+    - name: bolt
+      port: 7687

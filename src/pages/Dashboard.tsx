@@ -1,4 +1,6 @@
+import { useState, useEffect } from 'react';
 import { FileText, Network, Briefcase, Search, Database, TrendingUp } from 'lucide-react';
+import { apiGetStats } from '../lib/api';
 
 interface DashboardProps {
   onNavigate: (page: string) => void;
@@ -11,7 +13,6 @@ const features = [
     description: 'Upload and chat with multiple PDF documents using advanced RAG technology',
     icon: FileText,
     color: 'blue',
-    stats: '0 documents',
   },
   {
     id: 'graphrag',
@@ -19,7 +20,6 @@ const features = [
     description: 'Extract entities and build knowledge graphs for enhanced document analysis',
     icon: Network,
     color: 'green',
-    stats: '0 graphs',
   },
   {
     id: 'resume-feedback',
@@ -27,7 +27,6 @@ const features = [
     description: 'Get AI-powered ATS scoring and feedback on your resume',
     icon: Briefcase,
     color: 'orange',
-    stats: '0 analyzed',
   },
   {
     id: 'research',
@@ -35,7 +34,6 @@ const features = [
     description: 'Autonomous AI research agent for comprehensive information gathering',
     icon: Search,
     color: 'purple',
-    stats: '0 reports',
   },
   {
     id: 'text-to-sql',
@@ -43,7 +41,6 @@ const features = [
     description: 'Convert natural language queries into SQL and execute them',
     icon: Database,
     color: 'red',
-    stats: '0 queries',
   },
 ];
 
@@ -56,6 +53,16 @@ const colorClasses = {
 };
 
 export default function Dashboard({ onNavigate }: DashboardProps) {
+  const [stats, setStats] = useState({ documents: 0, reports: 0, queries: 0 });
+
+  useEffect(() => {
+    apiGetStats()
+      .then(setStats)
+      .catch(() => {
+        // Gateway may not be running yet — keep defaults
+      });
+  }, []);
+
   return (
     <div className="max-w-7xl mx-auto">
       <div className="mb-8">
@@ -71,7 +78,7 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
             <span className="text-sm font-medium text-gray-600">Total Documents</span>
             <TrendingUp className="w-4 h-4 text-green-500" />
           </div>
-          <div className="text-3xl font-bold text-gray-900">0</div>
+          <div className="text-3xl font-bold text-gray-900">{stats.documents}</div>
           <p className="text-xs text-gray-500 mt-1">PDFs processed</p>
         </div>
 
@@ -80,7 +87,7 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
             <span className="text-sm font-medium text-gray-600">Research Reports</span>
             <TrendingUp className="w-4 h-4 text-blue-500" />
           </div>
-          <div className="text-3xl font-bold text-gray-900">0</div>
+          <div className="text-3xl font-bold text-gray-900">{stats.reports}</div>
           <p className="text-xs text-gray-500 mt-1">Reports generated</p>
         </div>
 
@@ -89,7 +96,7 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
             <span className="text-sm font-medium text-gray-600">SQL Queries</span>
             <TrendingUp className="w-4 h-4 text-purple-500" />
           </div>
-          <div className="text-3xl font-bold text-gray-900">0</div>
+          <div className="text-3xl font-bold text-gray-900">{stats.queries}</div>
           <p className="text-xs text-gray-500 mt-1">Queries executed</p>
         </div>
       </div>
@@ -108,9 +115,8 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
               className="bg-white rounded-xl p-6 border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all text-left group"
             >
               <div
-                className={`w-12 h-12 rounded-lg ${
-                  colorClasses[feature.color as keyof typeof colorClasses]
-                } flex items-center justify-center mb-4 transition-all`}
+                className={`w-12 h-12 rounded-lg ${colorClasses[feature.color as keyof typeof colorClasses]
+                  } flex items-center justify-center mb-4 transition-all`}
               >
                 <Icon className="w-6 h-6" />
               </div>
@@ -118,8 +124,7 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
                 {feature.title}
               </h3>
               <p className="text-sm text-gray-600 mb-4">{feature.description}</p>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-500">{feature.stats}</span>
+              <div className="flex items-center justify-end">
                 <span className="text-blue-600 text-sm font-medium group-hover:translate-x-1 transition-transform">
                   Launch →
                 </span>

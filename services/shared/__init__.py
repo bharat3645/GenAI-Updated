@@ -1,0 +1,1 @@
+# GenAI Platform — Shared Library

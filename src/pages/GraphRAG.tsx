@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Network, Search, Loader2, FileText, ArrowRight } from 'lucide-react';
+import { ragQuery } from '../lib/api';
 
 interface Entity {
   id: string;
@@ -14,6 +15,8 @@ interface Relationship {
   target: string;
   type: string;
 }
+
+
 
 export default function GraphRAG() {
   const [query, setQuery] = useState('');
@@ -31,70 +34,29 @@ export default function GraphRAG() {
     setAnswer('');
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/graphrag-extract`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          },
-          body: JSON.stringify({
-            query: query,
-          }),
+      const data = await ragQuery(query, [], true);
+
+      // Map graph context triples into entities and relationships
+      const entityMap = new Map<string, Entity>();
+      const rels: Relationship[] = [];
+
+      data.graph_context.forEach((triple, i) => {
+        if (!entityMap.has(triple.subject)) {
+          entityMap.set(triple.subject, { id: `e_${entityMap.size}`, name: triple.subject, type: 'Concept', description: '' });
         }
-      );
+        if (!entityMap.has(triple.obj)) {
+          entityMap.set(triple.obj, { id: `e_${entityMap.size}`, name: triple.obj, type: 'Concept', description: '' });
+        }
+        rels.push({ id: `r_${i}`, source: triple.subject, target: triple.obj, type: triple.predicate });
+      });
 
-      const data = await response.json();
-
-      setEntities(data.entities || []);
-      setRelationships(data.relationships || []);
-      setAnswer(
-        data.summary ||
-          `Based on the knowledge graph analysis, I found ${(data.entities || []).length} relevant entities and ${(data.relationships || []).length} relationships related to "${query}". The GraphRAG system extracted these from your uploaded documents and mapped their connections to provide context-aware insights.`
-      );
-
+      setEntities(Array.from(entityMap.values()));
+      setRelationships(rels);
+      setAnswer(data.answer);
       setSearching(false);
     } catch (error) {
       setSearching(false);
-      const mockEntities: Entity[] = [
-        {
-          id: '1',
-          name: 'Machine Learning',
-          type: 'Technology',
-          description: 'A subset of artificial intelligence',
-        },
-        {
-          id: '2',
-          name: 'Neural Networks',
-          type: 'Concept',
-          description: 'Computing systems inspired by biological neural networks',
-        },
-        {
-          id: '3',
-          name: 'Deep Learning',
-          type: 'Technology',
-          description: 'Advanced machine learning using multi-layer neural networks',
-        },
-        {
-          id: '4',
-          name: 'Data Science',
-          type: 'Field',
-          description: 'Interdisciplinary field using scientific methods to extract knowledge',
-        },
-      ];
-
-      const mockRelationships: Relationship[] = [
-        { id: '1', source: 'Machine Learning', target: 'Neural Networks', type: 'uses' },
-        { id: '2', source: 'Deep Learning', target: 'Neural Networks', type: 'implements' },
-        { id: '3', source: 'Data Science', target: 'Machine Learning', type: 'includes' },
-      ];
-
-      setEntities(mockEntities);
-      setRelationships(mockRelationships);
-      setAnswer(
-        `Error fetching from GraphRAG. Showing sample data. Query: "${query}"`
-      );
+      setAnswer(`Error: ${error instanceof Error ? error.message : 'Failed to query. Please try again.'}`);
     }
   };
 
@@ -163,9 +125,8 @@ export default function GraphRAG() {
                   <div className="flex items-start justify-between mb-2">
                     <h3 className="font-semibold text-gray-900">{entity.name}</h3>
                     <span
-                      className={`px-2 py-1 text-xs font-medium rounded border ${
-                        entityTypeColors[entity.type] || 'bg-gray-100 text-gray-700 border-gray-200'
-                      }`}
+                      className={`px-2 py-1 text-xs font-medium rounded border ${entityTypeColors[entity.type] || 'bg-gray-100 text-gray-700 border-gray-200'
+                        }`}
                     >
                       {entity.type}
                     </span>
