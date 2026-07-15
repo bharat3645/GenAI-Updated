@@ -1,1 +1,274 @@
-IyDilIDilIAgQVBJIEdhdGV3YXkg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACmFwaVZlcnNpb246IGFwcHMvdjEKa2luZDogRGVwbG95bWVudAptZXRhZGF0YToKICBuYW1lOiBhcGktZ2F0ZXdheQogIG5hbWVzcGFjZTogZ2VuYWktcGxhdGZvcm0Kc3BlYzoKICByZXBsaWNhczogMgogIHNlbGVjdG9yOgogICAgbWF0Y2hMYWJlbHM6CiAgICAgIGFwcDogYXBpLWdhdGV3YXkKICB0ZW1wbGF0ZToKICAgIG1ldGFkYXRhOgogICAgICBsYWJlbHM6CiAgICAgICAgYXBwOiBhcGktZ2F0ZXdheQogICAgICBhbm5vdGF0aW9uczoKICAgICAgICBwcm9tZXRoZXVzLmlvL3NjcmFwZTogInRydWUiCiAgICAgICAgcHJvbWV0aGV1cy5pby9wb3J0OiAiODAwMCIKICAgIHNwZWM6CiAgICAgIGNvbnRhaW5lcnM6CiAgICAgICAgLSBuYW1lOiBhcGktZ2F0ZXdheQogICAgICAgICAgaW1hZ2U6IGdlbmFpLXBsYXRmb3JtL2FwaS1nYXRld2F5OmxhdGVzdAogICAgICAgICAgaW1hZ2VQdWxsUG9saWN5OiBOZXZlcgogICAgICAgICAgcG9ydHM6CiAgICAgICAgICAgIC0gY29udGFpbmVyUG9ydDogODAwMAogICAgICAgICAgZW52RnJvbToKICAgICAgICAgICAgLSBjb25maWdNYXBSZWY6CiAgICAgICAgICAgICAgICBuYW1lOiBnZW5haS1jb25maWcKICAgICAgICAgICAgLSBzZWNyZXRSZWY6CiAgICAgICAgICAgICAgICBuYW1lOiBnZW5haS1zZWNyZXRzCiAgICAgICAgICByZWFkaW5lc3NQcm9iZToKICAgICAgICAgICAgaHR0cEdldDoKICAgICAgICAgICAgICBwYXRoOiAvaGVhbHRoCiAgICAgICAgICAgICAgcG9ydDogODAwMAogICAgICAgICAgICBpbml0aWFsRGVsYXlTZWNvbmRzOiAxMAogICAgICAgICAgICBwZXJpb2RTZWNvbmRzOiAxNQogICAgICAgICAgbGl2ZW5lc3NQcm9iZToKICAgICAgICAgICAgaHR0cEdldDoKICAgICAgICAgICAgICBwYXRoOiAvaGVhbHRoCiAgICAgICAgICAgICAgcG9ydDogODAwMAogICAgICAgICAgICBpbml0aWFsRGVsYXlTZWNvbmRzOiAxNQogICAgICAgICAgICBwZXJpb2RTZWNvbmRzOiAzMAogICAgICAgICAgcmVzb3VyY2VzOgogICAgICAgICAgICByZXF1ZXN0czoKICAgICAgICAgICAgICBtZW1vcnk6ICIxMjhNaSIKICAgICAgICAgICAgICBjcHU6ICIxMDBtIgogICAgICAgICAgICBsaW1pdHM6CiAgICAgICAgICAgICAgbWVtb3J5OiAiNTEyTWkiCiAgICAgICAgICAgICAgY3B1OiAiNTAwbSIKLS0tCmFwaVZlcnNpb246IHYxCmtpbmQ6IFNlcnZpY2UKbWV0YWRhdGE6CiAgbmFtZTogYXBpLWdhdGV3YXkKICBuYW1lc3BhY2U6IGdlbmFpLXBsYXRmb3JtCnNwZWM6CiAgdHlwZTogTG9hZEJhbGFuY2VyCiAgc2VsZWN0b3I6CiAgICBhcHA6IGFwaS1nYXRld2F5CiAgcG9ydHM6CiAgICAtIHBvcnQ6IDgwMDAKICAgICAgdGFyZ2V0UG9ydDogODAwMAoKLS0tCiMg4pSA4pSAIFBERiBSQUcgU2VydmljZSDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKYXBpVmVyc2lvbjogYXBwcy92MQpraW5kOiBEZXBsb3ltZW50Cm1ldGFkYXRhOgogIG5hbWU6IHBkZi1yYWctc2VydmljZQogIG5hbWVzcGFjZTogZ2VuYWktcGxhdGZvcm0Kc3BlYzoKICByZXBsaWNhczogMgogIHNlbGVjdG9yOgogICAgbWF0Y2hMYWJlbHM6CiAgICAgIGFwcDogcGRmLXJhZy1zZXJ2aWNlCiAgdGVtcGxhdGU6CiAgICBtZXRhZGF0YToKICAgICAgbGFiZWxzOgogICAgICAgIGFwcDogcGRmLXJhZy1zZXJ2aWNlCiAgICBzcGVjOgogICAgICBjb250YWluZXJzOgogICAgICAgIC0gbmFtZTogcGRmLXJhZy1zZXJ2aWNlCiAgICAgICAgICBpbWFnZTogZ2VuYWktcGxhdGZvcm0vcGRmLXJhZy1zZXJ2aWNlOmxhdGVzdAogICAgICAgICAgaW1hZ2VQdWxsUG9saWN5OiBOZXZlcgogICAgICAgICAgcG9ydHM6CiAgICAgICAgICAgIC0gY29udGFpbmVyUG9ydDogODAwMQogICAgICAgICAgZW52RnJvbToKICAgICAgICAgICAgLSBjb25maWdNYXBSZWY6CiAgICAgICAgICAgICAgICBuYW1lOiBnZW5haS1jb25maWcKICAgICAgICAgICAgLSBzZWNyZXRSZWY6CiAgICAgICAgICAgICAgICBuYW1lOiBnZW5haS1zZWNyZXRzCiAgICAgICAgICByZWFkaW5lc3NQcm9iZToKICAgICAgICAgICAgaHR0cEdldDoKICAgICAgICAgICAgICBwYXRoOiAvaGVhbHRoCiAgICAgICAgICAgICAgcG9ydDogODAwMQogICAgICAgICAgICBpbml0aWFsRGVsYXlTZWNvbmRzOiAxMAogICAgICAgICAgICBwZXJpb2RTZWNvbmRzOiAxNQogICAgICAgICAgcmVzb3VyY2VzOgogICAgICAgICAgICByZXF1ZXN0czoKICAgICAgICAgICAgICBtZW1vcnk6ICIyNTZNaSIKICAgICAgICAgICAgICBjcHU6ICIyMDBtIgogICAgICAgICAgICBsaW1pdHM6CiAgICAgICAgICAgICAgbWVtb3J5OiAiMUdpIgogICAgICAgICAgICAgIGNwdTogIjEwMDBtIgotLS0KYXBpVmVyc2lvbjogdjEKa2luZDogU2VydmljZQptZXRhZGF0YToKICBuYW1lOiBwZGYtcmFnLXNlcnZpY2UKICBuYW1lc3BhY2U6IGdlbmFpLXBsYXRmb3JtCnNwZWM6CiAgc2VsZWN0b3I6CiAgICBhcHA6IHBkZi1yYWctc2VydmljZQogIHBvcnRzOgogICAgLSBwb3J0OiA4MDAxCgotLS0KIyDilIDilIAgQVRTIEFnZW50IFNlcnZpY2Ug4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACmFwaVZlcnNpb246IGFwcHMvdjEKa2luZDogRGVwbG95bWVudAptZXRhZGF0YToKICBuYW1lOiBhdHMtYWdlbnQtc2VydmljZQogIG5hbWVzcGFjZTogZ2VuYWktcGxhdGZvcm0Kc3BlYzoKICByZXBsaWNhczogMgogIHNlbGVjdG9yOgogICAgbWF0Y2hMYWJlbHM6CiAgICAgIGFwcDogYXRzLWFnZW50LXNlcnZpY2UKICB0ZW1wbGF0ZToKICAgIG1ldGFkYXRhOgogICAgICBsYWJlbHM6CiAgICAgICAgYXBwOiBhdHMtYWdlbnQtc2VydmljZQogICAgc3BlYzoKICAgICAgY29udGFpbmVyczoKICAgICAgICAtIG5hbWU6IGF0cy1hZ2VudC1zZXJ2aWNlCiAgICAgICAgICBpbWFnZTogZ2VuYWktcGxhdGZvcm0vYXRzLWFnZW50LXNlcnZpY2U6bGF0ZXN0CiAgICAgICAgICBpbWFnZVB1bGxQb2xpY3k6IE5ldmVyCiAgICAgICAgICBwb3J0czoKICAgICAgICAgICAgLSBjb250YWluZXJQb3J0OiA4MDAyCiAgICAgICAgICBlbnZGcm9tOgogICAgICAgICAgICAtIGNvbmZpZ01hcFJlZjoKICAgICAgICAgICAgICAgIG5hbWU6IGdlbmFpLWNvbmZpZwogICAgICAgICAgICAtIHNlY3JldFJlZjoKICAgICAgICAgICAgICAgIG5hbWU6IGdlbmFpLXNlY3JldHMKICAgICAgICAgIHJlYWRpbmVzc1Byb2JlOgogICAgICAgICAgICBodHRwR2V0OgogICAgICAgICAgICAgIHBhdGg6IC9oZWFsdGgKICAgICAgICAgICAgICBwb3J0OiA4MDAyCiAgICAgICAgICAgIGluaXRpYWxEZWxheVNlY29uZHM6IDEwCiAgICAgICAgICAgIHBlcmlvZFNlY29uZHM6IDE1CiAgICAgICAgICByZXNvdXJjZXM6CiAgICAgICAgICAgIHJlcXVlc3RzOgogICAgICAgICAgICAgIG1lbW9yeTogIjI1Nk1pIgogICAgICAgICAgICAgIGNwdTogIjIwMG0iCiAgICAgICAgICAgIGxpbWl0czoKICAgICAgICAgICAgICBtZW1vcnk6ICIxR2kiCiAgICAgICAgICAgICAgY3B1OiAiMTAwMG0iCi0tLQphcGlWZXJzaW9uOiB2MQpraW5kOiBTZXJ2aWNlCm1ldGFkYXRhOgogIG5hbWU6IGF0cy1hZ2VudC1zZXJ2aWNlCiAgbmFtZXNwYWNlOiBnZW5haS1wbGF0Zm9ybQpzcGVjOgogIHNlbGVjdG9yOgogICAgYXBwOiBhdHMtYWdlbnQtc2VydmljZQogIHBvcnRzOgogICAgLSBwb3J0OiA4MDAyCgotLS0KIyDilIDilIAgUmVzZWFyY2ggU2VydmljZSDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKYXBpVmVyc2lvbjogYXBwcy92MQpraW5kOiBEZXBsb3ltZW50Cm1ldGFkYXRhOgogIG5hbWU6IHJlc2VhcmNoLXNlcnZpY2UKICBuYW1lc3BhY2U6IGdlbmFpLXBsYXRmb3JtCnNwZWM6CiAgcmVwbGljYXM6IDEKICBzZWxlY3RvcjoKICAgIG1hdGNoTGFiZWxzOgogICAgICBhcHA6IHJlc2VhcmNoLXNlcnZpY2UKICB0ZW1wbGF0ZToKICAgIG1ldGFkYXRhOgogICAgICBsYWJlbHM6CiAgICAgICAgYXBwOiByZXNlYXJjaC1zZXJ2aWNlCiAgICBzcGVjOgogICAgICBjb250YWluZXJzOgogICAgICAgIC0gbmFtZTogcmVzZWFyY2gtc2VydmljZQogICAgICAgICAgaW1hZ2U6IGdlbmFpLXBsYXRmb3JtL3Jlc2VhcmNoLXNlcnZpY2U6bGF0ZXN0CiAgICAgICAgICBpbWFnZVB1bGxQb2xpY3k6IE5ldmVyCiAgICAgICAgICBwb3J0czoKICAgICAgICAgICAgLSBjb250YWluZXJQb3J0OiA4MDAzCiAgICAgICAgICBlbnZGcm9tOgogICAgICAgICAgICAtIGNvbmZpZ01hcFJlZjoKICAgICAgICAgICAgICAgIG5hbWU6IGdlbmFpLWNvbmZpZwogICAgICAgICAgICAtIHNlY3JldFJlZjoKICAgICAgICAgICAgICAgIG5hbWU6IGdlbmFpLXNlY3JldHMKICAgICAgICAgIHJlYWRpbmVzc1Byb2JlOgogICAgICAgICAgICBodHRwR2V0OgogICAgICAgICAgICAgIHBhdGg6IC9oZWFsdGgKICAgICAgICAgICAgICBwb3J0OiA4MDAzCiAgICAgICAgICAgIGluaXRpYWxEZWxheVNlY29uZHM6IDEwCiAgICAgICAgICAgIHBlcmlvZFNlY29uZHM6IDE1CiAgICAgICAgICByZXNvdXJjZXM6CiAgICAgICAgICAgIHJlcXVlc3RzOgogICAgICAgICAgICAgIG1lbW9yeTogIjI1Nk1pIgogICAgICAgICAgICAgIGNwdTogIjIwMG0iCiAgICAgICAgICAgIGxpbWl0czoKICAgICAgICAgICAgICBtZW1vcnk6ICIxR2kiCiAgICAgICAgICAgICAgY3B1OiAiMTAwMG0iCi0tLQphcGlWZXJzaW9uOiB2MQpraW5kOiBTZXJ2aWNlCm1ldGFkYXRhOgogIG5hbWU6IHJlc2VhcmNoLXNlcnZpY2UKICBuYW1lc3BhY2U6IGdlbmFpLXBsYXRmb3JtCnNwZWM6CiAgc2VsZWN0b3I6CiAgICBhcHA6IHJlc2VhcmNoLXNlcnZpY2UKICBwb3J0czoKICAgIC0gcG9ydDogODAwMwoKLS0tCiMg4pSA4pSAIFNRTCBTZXJ2aWNlIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgApBcGlWZXJzaW9uOiBhcHBzL3YxCmtpbmQ6IERlcGxveW1lbnQKbWV0YWRhdGE6CiAgbmFtZTogc3FsLXNlcnZpY2UKICBuYW1lc3BhY2U6IGdlbmFpLXBsYXRmb3JtCnNwZWM6CiAgcmVwbGljYXM6IDEKICBzZWxlY3RvcjoKICAgIG1hdGNoTGFiZWxzOgogICAgICBhcHA6IHNxbC1zZXJ2aWNlCiAgdGVtcGxhdGU6CiAgICBtZXRhZGF0YToKICAgICAgbGFiZWxzOgogICAgICAgIGFwcDogc3FsLXNlcnZpY2UKICAgIHNwZWM6CiAgICAgIGNvbnRhaW5lcnM6CiAgICAgICAgLSBuYW1lOiBzcWwtc2VydmljZQogICAgICAgICAgaW1hZ2U6IGdlbmFpLXBsYXRmb3JtL3NxbC1zZXJ2aWNlOmxhdGVzdAogICAgICAgICAgaW1hZ2VQdWxsUG9saWN5OiBOZXZlcgogICAgICAgICAgcG9ydHM6CiAgICAgICAgICAgIC0gY29udGFpbmVyUG9ydDogODAwNAogICAgICAgICAgZW52RnJvbToKICAgICAgICAgICAgLSBjb25maWdNYXBSZWY6CiAgICAgICAgICAgICAgICBuYW1lOiBnZW5haS1jb25maWcKICAgICAgICAgICAgLSBzZWNyZXRSZWY6CiAgICAgICAgICAgICAgICBuYW1lOiBnZW5haS1zZWNyZXRzCiAgICAgICAgICByZWFkaW5lc3NQcm9iZToKICAgICAgICAgICAgaHR0cEdldDoKICAgICAgICAgICAgICBwYXRoOiAvaGVhbHRoCiAgICAgICAgICAgICAgcG9ydDogODAwNAogICAgICAgICAgICBpbml0aWFsRGVsYXlTZWNvbmRzOiAxMAogICAgICAgICAgICBwZXJpb2RTZWNvbmRzOiAxNQogICAgICAgICAgcmVzb3VyY2VzOgogICAgICAgICAgICByZXF1ZXN0czoKICAgICAgICAgICAgICBtZW1vcnk6ICIxMjhNaSIKICAgICAgICAgICAgICBjcHU6ICIxMDBtIgogICAgICAgICAgICBsaW1pdHM6CiAgICAgICAgICAgICAgbWVtb3J5OiAiNTEyTWkiCiAgICAgICAgICAgICAgY3B1OiAiNTAwbSIKLS0tCmFwaVZlcnNpb246IHYxCmtpbmQ6IFNlcnZpY2UKbWV0YWRhdGE6CiAgbmFtZTogc3FsLXNlcnZpY2UKICBuYW1lc3BhY2U6IGdlbmFpLXBsYXRmb3JtCnNwZWM6CiAgc2VsZWN0b3I6CiAgICBhcHA6IHNxbC1zZXJ2aWNlCiAgcG9ydHM6CiAgICAtIHBvcnQ6IDgwMDQK
+# ── API Gateway ──────────────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  namespace: genai-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+    spec:
+      containers:
+        - name: api-gateway
+          image: genai-platform/api-gateway:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: genai-config
+            - secretRef:
+                name: genai-secrets
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 30
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway
+  namespace: genai-platform
+spec:
+  type: LoadBalancer
+  selector:
+    app: api-gateway
+  ports:
+    - port: 8000
+      targetPort: 8000
+
+---
+# ── PDF RAG Service ──────────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdf-rag-service
+  namespace: genai-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pdf-rag-service
+  template:
+    metadata:
+      labels:
+        app: pdf-rag-service
+    spec:
+      containers:
+        - name: pdf-rag-service
+          image: genai-platform/pdf-rag-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8001
+          envFrom:
+            - configMapRef:
+                name: genai-config
+            - secretRef:
+                name: genai-secrets
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8001
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pdf-rag-service
+  namespace: genai-platform
+spec:
+  selector:
+    app: pdf-rag-service
+  ports:
+    - port: 8001
+
+---
+# ── ATS Agent Service ───────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ats-agent-service
+  namespace: genai-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ats-agent-service
+  template:
+    metadata:
+      labels:
+        app: ats-agent-service
+    spec:
+      containers:
+        - name: ats-agent-service
+          image: genai-platform/ats-agent-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8002
+          envFrom:
+            - configMapRef:
+                name: genai-config
+            - secretRef:
+                name: genai-secrets
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8002
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ats-agent-service
+  namespace: genai-platform
+spec:
+  selector:
+    app: ats-agent-service
+  ports:
+    - port: 8002
+
+---
+# ── Research Service ────────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: research-service
+  namespace: genai-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: research-service
+  template:
+    metadata:
+      labels:
+        app: research-service
+    spec:
+      containers:
+        - name: research-service
+          image: genai-platform/research-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8003
+          envFrom:
+            - configMapRef:
+                name: genai-config
+            - secretRef:
+                name: genai-secrets
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8003
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: research-service
+  namespace: genai-platform
+spec:
+  selector:
+    app: research-service
+  ports:
+    - port: 8003
+
+---
+# ── SQL Service ─────────────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sql-service
+  namespace: genai-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sql-service
+  template:
+    metadata:
+      labels:
+        app: sql-service
+    spec:
+      containers:
+        - name: sql-service
+          image: genai-platform/sql-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8004
+          envFrom:
+            - configMapRef:
+                name: genai-config
+            - secretRef:
+                name: genai-secrets
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8004
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sql-service
+  namespace: genai-platform
+spec:
+  selector:
+    app: sql-service
+  ports:
+    - port: 8004
