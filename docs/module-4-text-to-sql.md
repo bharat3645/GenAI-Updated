@@ -58,4 +58,3 @@ Natural Language Question
     "limit": {"passed": true}
   }
 }
-```
