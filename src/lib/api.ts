@@ -308,4 +308,3 @@ export async function apiGetStats(): Promise<{ documents: number; reports: numbe
     });
     return handleResponse(res);
 }
-
