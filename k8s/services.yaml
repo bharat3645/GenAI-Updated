@@ -1,4 +1,4 @@
-# ── API Gateway ──────────────────────────────────────────────────
+# ── API Gateway ──────────────────────────────────────────────
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -62,7 +62,7 @@ spec:
       targetPort: 8000
 
 ---
-# ── PDF RAG Service ──────────────────────────────────────────────
+# ── PDF RAG Service ────────────────────────────────────────
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -115,7 +115,7 @@ spec:
     - port: 8001
 
 ---
-# ── ATS Agent Service ───────────────────────────────────────────
+# ── ATS Agent Service ──────────────────────────────────────
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -168,8 +168,7 @@ spec:
     - port: 8002
 
 ---
-# ── Research Service ────────────────────────────────────────────
-apiVersion: apps/v1
+# ── Research Service ──────────────────────────────────────napiVersion: apps/v1
 kind: Deployment
 metadata:
   name: research-service
@@ -221,7 +220,7 @@ spec:
     - port: 8003
 
 ---
-# ── SQL Service ─────────────────────────────────────────────────
+# ── SQL Service ────────────────────────────────────────────
 apiVersion: apps/v1
 kind: Deployment
 metadata:

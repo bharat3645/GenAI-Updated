@@ -3,7 +3,7 @@ global:
   evaluation_interval: 15s
 
 scrape_configs:
-  # ── API Gateway ──────────────────────────────────────────
+  # ── API Gateway ──────────────────────────
   - job_name: "api-gateway"
     metrics_path: /metrics
     static_configs:
@@ -11,7 +11,7 @@ scrape_configs:
         labels:
           service: "api-gateway"
 
-  # ── PDF RAG Service ──────────────────────────────────────
+  # ── PDF RAG Service ────────────────────────
   - job_name: "pdf-rag-service"
     metrics_path: /metrics
     static_configs:
@@ -19,7 +19,7 @@ scrape_configs:
         labels:
           service: "pdf-rag-service"
 
-  # ── ATS Agent Service ────────────────────────────────────
+  # ── ATS Agent Service ────────────────────────
   - job_name: "ats-agent-service"
     metrics_path: /metrics
     static_configs:
@@ -27,7 +27,7 @@ scrape_configs:
         labels:
           service: "ats-agent-service"
 
-  # ── Research Service ─────────────────────────────────────
+  # ── Research Service ───────────────────────
   - job_name: "research-service"
     metrics_path: /metrics
     static_configs:
@@ -35,7 +35,7 @@ scrape_configs:
         labels:
           service: "research-service"
 
-  # ── SQL Service ──────────────────────────────────────────
+  # ── SQL Service ──────────────────────────
   - job_name: "sql-service"
     metrics_path: /metrics
     static_configs:
@@ -43,7 +43,7 @@ scrape_configs:
         labels:
           service: "sql-service"
 
-  # ── Infrastructure ───────────────────────────────────────
+  # ── Infrastructure ────────────────────────
   - job_name: "postgres"
     static_configs:
       - targets: ["postgres-exporter:9187"]

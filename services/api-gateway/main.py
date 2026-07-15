@@ -40,7 +40,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from shared.config import get_settings
 from prometheus_fastapi_instrumentator import Instrumentator
 
-# ── Structured Logging ──────────────────────────────────────────
+# ── Structured Logging ──────────────────────────────────
 import json as json_mod
 
 class JSONFormatter(logging.Formatter):
@@ -74,10 +74,10 @@ logger = logging.getLogger("api-gateway")
 
 settings = get_settings()
 
-# ── Rate Limiter ────────────────────────────────────────────────
+# ── Rate Limiter ──────────────────────────────────────
 limiter = Limiter(key_func=get_remote_address, default_limits=["120/minute"])
 
-# ── Service URLs ────────────────────────────────────────────────
+# ── Service URLs ──────────────────────────────────────
 SERVICE_MAP = {
     "rag": "http://pdf-rag-service:8001",
     "ats": "http://ats-agent-service:8002",
@@ -85,7 +85,7 @@ SERVICE_MAP = {
     "sql": "http://sql-service:8004",
 }
 
-# ── Auth ────────────────────────────────────────────────────────
+# ── Auth ─────────────────────────────────────────────────
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 hours
@@ -126,7 +126,7 @@ async def get_current_user(request: Request) -> TokenData:
         raise HTTPException(status_code=401, detail="Invalid token")
 
 
-# ── Correlation ID Middleware ───────────────────────────────────
+# ── Correlation ID Middleware ────────────────────────────
 
 class CorrelationIDMiddleware(BaseHTTPMiddleware):
     """Attach a unique correlation ID to every request for tracing."""
@@ -160,7 +160,7 @@ class CorrelationIDMiddleware(BaseHTTPMiddleware):
         return response
 
 
-# ── App Setup ───────────────────────────────────────────────────
+# ── App Setup ────────────────────────────────────────
 http_client: httpx.AsyncClient | None = None
 redis_client: aioredis.Redis | None = None
 
@@ -180,7 +180,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# ── Prometheus Instrumentation ──────────────────────────────────
+# ── Prometheus Instrumentation ────────────────────────────
 Instrumentator().instrument(app).expose(app)
 
 # Add middleware (order matters — last added runs first)
@@ -204,7 +204,7 @@ async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
     )
 
 
-# ── Aggregated Health Check ────────────────────────────────────
+# ── Aggregated Health Check ────────────────────────────
 
 @app.get("/health")
 async def health():
@@ -227,7 +227,7 @@ async def health():
     }
 
 
-# ── Auth Endpoints ──────────────────────────────────────────────
+# ── Auth Endpoints ────────────────────────────────────
 
 @app.post("/api/auth/register")
 @limiter.limit("10/minute")
@@ -245,7 +245,7 @@ async def login(request: Request, req: LoginRequest):
     return {"token": token, "user_id": "mock-user-id", "email": req.email}
 
 
-# ── Proxy helpers ───────────────────────────────────────────────
+# ── Proxy helpers ─────────────────────────────────────
 
 async def _proxy(service: str, path: str, request: Request, method: str = "GET") -> JSONResponse:
     """Forward a request to a downstream service."""
@@ -289,7 +289,7 @@ async def _proxy_stream(service: str, path: str, request: Request) -> EventSourc
     return EventSourceResponse(event_generator())
 
 
-# ── RAG Routes ──────────────────────────────────────────────────
+# ── RAG Routes ──────────────────────────────────────
 
 @app.post("/api/rag/ingest")
 async def rag_ingest(request: Request, _user: TokenData = Depends(get_current_user)):
@@ -311,7 +311,7 @@ async def rag_graph(doc_id: str, request: Request, _user: TokenData = Depends(ge
     return await _proxy("rag", f"/graph/{doc_id}", request)
 
 
-# ── KG Routes (Module 5 — Standalone Knowledge Graph) ──────────
+# ── KG Routes (Module 5 — Standalone Knowledge Graph) ──────────────
 
 @app.post("/api/kg/extract")
 async def kg_extract(request: Request, _user: TokenData = Depends(get_current_user)):
@@ -333,7 +333,7 @@ async def kg_stats(request: Request, _user: TokenData = Depends(get_current_user
     return await _proxy("rag", "/kg/stats", request)
 
 
-# ── ATS Routes ──────────────────────────────────────────────────
+# ── ATS Routes ──────────────────────────────────────
 
 @app.post("/api/ats/analyze")
 async def ats_analyze(request: Request, _user: TokenData = Depends(get_current_user)):
@@ -350,7 +350,7 @@ async def ats_report(task_id: str, request: Request, _user: TokenData = Depends(
     return await _proxy("ats", f"/report/{task_id}", request)
 
 
-# ── Research Routes ─────────────────────────────────────────────
+# ── Research Routes ─────────────────────────────────
 
 @app.post("/api/research/start")
 async def research_start(request: Request, _user: TokenData = Depends(get_current_user)):
@@ -372,7 +372,7 @@ async def research_report(task_id: str, request: Request, _user: TokenData = Dep
     return await _proxy("research", f"/report/{task_id}", request)
 
 
-# ── SQL Routes ──────────────────────────────────────────────────
+# ── SQL Routes ──────────────────────────────────────
 
 @app.post("/api/sql/generate")
 async def sql_generate(request: Request, _user: TokenData = Depends(get_current_user)):
@@ -389,7 +389,7 @@ async def sql_schema(request: Request, _user: TokenData = Depends(get_current_us
     return await _proxy("sql", "/schema", request)
 
 
-# ── Stats ───────────────────────────────────────────────────────
+# ── Stats ──────────────────────────────────────────────
 
 @app.get("/api/stats")
 async def platform_stats(_user: TokenData = Depends(get_current_user)):
