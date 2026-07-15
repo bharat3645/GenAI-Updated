@@ -67,7 +67,7 @@ class PDFIngestionPipeline:
         """Expose the KG Engine for direct access by API endpoints."""
         return self._kg_engine
 
-    # ── Public API ──────────────────────────────────────────────
+    # ── Public API ─────────────────────────────────
 
     async def process(
         self,
@@ -103,7 +103,7 @@ class PDFIngestionPipeline:
             "relationship_count": len(extraction.relationships),
         }
 
-    # ── Step 1: Text Extraction ─────────────────────────────────
+    # ── Step 1: Text Extraction ────────────────────────
 
     def _extract_text(self, pdf_path: str) -> list[str]:
         """Extract text from each page of a PDF."""
@@ -116,7 +116,7 @@ class PDFIngestionPipeline:
         doc.close()
         return pages
 
-    # ── Step 2: Chunking ────────────────────────────────────────
+    # ── Step 2: Chunking ──────────────────────────────
 
     def _chunk_text(self, text: str) -> list[str]:
         """Chunk text into CHUNK_SIZE-token segments with CHUNK_OVERLAP overlap."""
@@ -133,7 +133,7 @@ class PDFIngestionPipeline:
 
         return chunks
 
-    # ── Step 3: Embeddings → Qdrant ─────────────────────────────
+    # ── Step 3: Embeddings → Qdrant ───────────────────────
 
     async def _store_embeddings(self, chunks: list[str], doc_id: str):
         """Generate embeddings and upsert into Qdrant."""

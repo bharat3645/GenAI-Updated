@@ -58,7 +58,7 @@ async def health():
     return HealthResponse(service="ats-agent-service")
 
 
-# ── Agent Prompts ───────────────────────────────────────────────
+# ── Agent Prompts ──────────────────────────────────────
 
 COORDINATOR_PROMPT = """You are a resume analysis coordinator. Examine the resume and job description below, then produce an execution plan.
 
@@ -251,7 +251,7 @@ Return JSON:
 }}"""
 
 
-# ── Agent Execution ─────────────────────────────────────────────
+# ── Agent Execution ───────────────────────────────────
 
 async def run_coordinator_agent(resume: str, job_description: str) -> dict:
     """Plan execution strategy based on resume type and JD."""
@@ -373,7 +373,7 @@ def _build_report(
     }
 
 
-# ── Endpoints ───────────────────────────────────────────────────
+# ── Endpoints ───────────────────────────────────────
 
 @app.post("/analyze")
 async def analyze(req: ATSAnalyzeRequest):

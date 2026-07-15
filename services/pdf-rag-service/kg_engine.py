@@ -83,7 +83,7 @@ class KGEngine:
         if self._neo4j_driver:
             await self._neo4j_driver.close()
 
-    # ── Core Extraction ────────────────────────────────────────
+    # ── Core Extraction ─────────────────────────────
 
     async def extract_entities(self, text: str, source_label: str = "user_input") -> ExtractionResult:
         """Extract entities and relationships from arbitrary text.
@@ -141,7 +141,7 @@ class KGEngine:
         await self.store_graph(extraction, doc_id)
         return extraction
 
-    # ── Entity Resolution ──────────────────────────────────────
+    # ── Entity Resolution ──────────────────────────
 
     async def resolve_entities(self, doc_id: str | None = None) -> dict[str, Any]:
         """Identify and merge duplicate entities using LLM-based similarity.
@@ -220,7 +220,7 @@ class KGEngine:
 
         return {"merged_count": total_merged, "merge_groups": all_merge_groups}
 
-    # ── Multi-Document Merging ─────────────────────────────────
+    # ── Multi-Document Merging ───────────────────────
 
     async def merge_documents(self, document_ids: list[str], resolve: bool = True) -> dict[str, Any]:
         """Merge knowledge graphs across multiple documents.
@@ -270,7 +270,7 @@ class KGEngine:
             "resolution": resolution_result,
         }
 
-    # ── Graph Storage ──────────────────────────────────────────
+    # ── Graph Storage ─────────────────────────────
 
     async def store_graph(self, extraction: ExtractionResult, doc_id: str):
         """Store entities as nodes and relationships as edges in Neo4j."""
@@ -303,7 +303,7 @@ class KGEngine:
                     confidence=rel.confidence,
                 )
 
-    # ── Entity Neighborhood ────────────────────────────────────
+    # ── Entity Neighborhood ────────────────────────
 
     async def get_entity_neighborhood(
         self, entity_id: str, hops: int = 2
@@ -350,7 +350,7 @@ class KGEngine:
 
         return GraphResponse(nodes=list(nodes_map.values()), edges=edges)
 
-    # ── Graph Statistics ───────────────────────────────────────
+    # ── Graph Statistics ───────────────────────
 
     async def get_stats(self, doc_id: str | None = None) -> dict[str, Any]:
         """Get knowledge graph statistics."""
@@ -397,7 +397,7 @@ class KGEngine:
             "relationship_types": rel_types,
         }
 
-    # ── Internal Helpers ───────────────────────────────────────
+    # ── Internal Helpers ────────────────────────
 
     @staticmethod
     def _split_text(text: str, max_chars: int = 2000) -> list[str]:
