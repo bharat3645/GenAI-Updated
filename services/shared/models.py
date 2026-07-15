@@ -9,7 +9,7 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 
-# ── Common ──────────────────────────────────────────────────────
+# ── Common ──────────────────────────────────────
 
 class HealthResponse(BaseModel):
     status: str = "ok"
@@ -22,7 +22,7 @@ class ErrorResponse(BaseModel):
     detail: str | None = None
 
 
-# ── PDF RAG Models ──────────────────────────────────────────────
+# ── PDF RAG Models ───────────────────────────────────
 
 class IngestRequest(BaseModel):
     """Sent when PDFs are uploaded for processing."""
@@ -83,7 +83,7 @@ class GraphResponse(BaseModel):
     edges: list[GraphEdge] = Field(default_factory=list)
 
 
-# ── Entity Extraction ───────────────────────────────────────────
+# ── Entity Extraction ────────────────────────────
 
 class EntityType(str, Enum):
     PERSON = "Person"
@@ -112,7 +112,7 @@ class ExtractionResult(BaseModel):
     relationships: list[ExtractedRelationship] = Field(default_factory=list)
 
 
-# ── ATS Models ──────────────────────────────────────────────────
+# ── ATS Models ──────────────────────────────────────
 
 class ATSAnalyzeRequest(BaseModel):
     resume_text: str
@@ -148,7 +148,7 @@ class ATSReport(BaseModel):
     summary: str = ""
 
 
-# ── Research Models ─────────────────────────────────────────────
+# ── Research Models ─────────────────────────────────
 
 class ResearchStatus(str, Enum):
     PLANNING = "planning"
@@ -187,7 +187,7 @@ class ResearchReport(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 
-# ── SQL Models ──────────────────────────────────────────────────
+# ── SQL Models ──────────────────────────────────────
 
 class SQLGenerateRequest(BaseModel):
     query: str
@@ -231,7 +231,7 @@ class SchemaResponse(BaseModel):
     tables: list[SchemaTable] = Field(default_factory=list)
 
 
-# ── Knowledge Graph Models ──────────────────────────────────────
+# ── Knowledge Graph Models ──────────────────────────
 
 class KGExtractRequest(BaseModel):
     """Extract a knowledge graph from raw text."""

@@ -31,7 +31,7 @@ class LLMProvider:
         self._embed_model = embed_model or f"ollama/{settings.ollama.embed_model}"
         self._base_url = settings.ollama.base_url
 
-    # ── Text Completion ──────────────────────────────────────────
+    # ── Text Completion ─────────────────────────────
 
     async def complete(
         self,
@@ -90,7 +90,7 @@ class LLMProvider:
             if delta and delta.content:
                 yield delta.content
 
-    # ── Structured Output ────────────────────────────────────────
+    # ── Structured Output ───────────────────────────
 
     async def complete_json(
         self,
@@ -122,7 +122,7 @@ class LLMProvider:
 
         return json.loads(raw)
 
-    # ── Embeddings ───────────────────────────────────────────────
+    # ── Embeddings ─────────────────────────────────
 
     async def embed(
         self,

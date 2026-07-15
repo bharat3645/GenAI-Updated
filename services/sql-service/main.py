@@ -55,7 +55,7 @@ async def health():
     return HealthResponse(service="sql-service")
 
 
-# ── Schema Serialization ───────────────────────────────────────
+# ── Schema Serialization ────────────────────────
 
 async def get_schema_context() -> str:
     """Introspect PostgreSQL information_schema and serialize for LLM prompt."""
@@ -137,7 +137,7 @@ async def get_schema_context() -> str:
         return "\n\n".join(schema_parts)
 
 
-# ── Triple-Layer Safety ────────────────────────────────────────
+# ── Triple-Layer Safety ────────────────────────
 
 BLOCKED_PATTERNS = re.compile(
     r"\b(INSERT|UPDATE|DELETE|DROP|ALTER|TRUNCATE|CREATE|GRANT|REVOKE|EXEC|EXECUTE|MERGE)\b",
@@ -154,7 +154,7 @@ def validate_sql_safety(sql: str) -> dict[str, Any]:
     """
     result = {"safe": True, "layers": {}, "modified_sql": sql}
 
-    # ── Layer 1: AST Parse ──────────────────────────────────
+    # ── Layer 1: AST Parse ─────────────────
     try:
         import sqlglot
         parsed = sqlglot.parse(sql)
@@ -181,7 +181,7 @@ def validate_sql_safety(sql: str) -> dict[str, Any]:
         result["layers"]["ast"] = {"passed": False, "reason": f"Parse error: {str(e)}"}
         return result
 
-    # ── Layer 2: Regex Blocklist ────────────────────────────
+    # ── Layer 2: Regex Blocklist ────────────────
     match = BLOCKED_PATTERNS.search(sql)
     if match:
         result["safe"] = False
@@ -192,7 +192,7 @@ def validate_sql_safety(sql: str) -> dict[str, Any]:
         return result
     result["layers"]["regex"] = {"passed": True}
 
-    # ── Layer 3: LIMIT Enforcement ──────────────────────────
+    # ── Layer 3: LIMIT Enforcement ──────────────
     has_limit = re.search(r"\bLIMIT\s+(\d+)\b", sql, re.IGNORECASE)
     if has_limit:
         limit_val = int(has_limit.group(1))
@@ -211,7 +211,7 @@ def validate_sql_safety(sql: str) -> dict[str, Any]:
     return result
 
 
-# ── SQL Generation ──────────────────────────────────────────────
+# ── SQL Generation ────────────────────────────────
 
 SQL_GEN_PROMPT = """You are a PostgreSQL expert. Generate a SQL query for the user's question.
 

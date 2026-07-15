@@ -4,7 +4,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
--- ── Users (JWT auth via API Gateway) ─────────────────────────
+-- ── Users (JWT auth via API Gateway) ──────────────────────
 CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     email TEXT UNIQUE NOT NULL,
@@ -14,8 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ── PDF Documents ───────────────────────────────────────────────
-CREATE TABLE IF NOT EXISTS pdf_documents (
+-- ── PDF Documents ──────────────────────────────────────CREATE TABLE IF NOT EXISTS pdf_documents (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
     filename TEXT NOT NULL,
@@ -27,8 +26,7 @@ CREATE TABLE IF NOT EXISTS pdf_documents (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ── Chat Sessions ───────────────────────────────────────────────
-CREATE TABLE IF NOT EXISTS chat_sessions (
+-- ── Chat Sessions ──────────────────────────────────────CREATE TABLE IF NOT EXISTS chat_sessions (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
     title TEXT DEFAULT 'New Chat',
@@ -45,8 +43,7 @@ CREATE TABLE IF NOT EXISTS chat_messages (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ── Resume Feedback ─────────────────────────────────────────────
-CREATE TABLE IF NOT EXISTS resume_feedback (
+-- ── Resume Feedback ──────────────────────────────────CREATE TABLE IF NOT EXISTS resume_feedback (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
     filename TEXT NOT NULL,
@@ -56,8 +53,7 @@ CREATE TABLE IF NOT EXISTS resume_feedback (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ── Research Tasks ──────────────────────────────────────────────
-CREATE TABLE IF NOT EXISTS research_tasks (
+-- ── Research Tasks ────────────────────────────────────CREATE TABLE IF NOT EXISTS research_tasks (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
     query TEXT NOT NULL,
@@ -71,8 +67,7 @@ CREATE TABLE IF NOT EXISTS research_tasks (
     completed_at TIMESTAMPTZ
 );
 
--- ── SQL Query History ───────────────────────────────────────────
-CREATE TABLE IF NOT EXISTS sql_queries (
+-- ── SQL Query History ───────────────────────────────────CREATE TABLE IF NOT EXISTS sql_queries (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
     natural_language TEXT NOT NULL,
@@ -83,8 +78,7 @@ CREATE TABLE IF NOT EXISTS sql_queries (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ── Indexes ─────────────────────────────────────────────────────
-CREATE INDEX IF NOT EXISTS idx_pdf_docs_user ON pdf_documents(user_id);
+-- ── Indexes ──────────────────────────────────────────────CREATE INDEX IF NOT EXISTS idx_pdf_docs_user ON pdf_documents(user_id);
 CREATE INDEX IF NOT EXISTS idx_chat_sess_user ON chat_sessions(user_id);
 CREATE INDEX IF NOT EXISTS idx_chat_msgs_sess ON chat_messages(session_id);
 CREATE INDEX IF NOT EXISTS idx_resume_fb_user ON resume_feedback(user_id);
