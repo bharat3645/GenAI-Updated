@@ -72,7 +72,7 @@ async def health():
     return HealthResponse(service="research-service")
 
 
-# ── Search Providers ────────────────────────────────────────────
+# ── Search Providers ─────────────────────────────────
 
 async def search_tavily(query: str, max_results: int = 10) -> list[dict]:
     """Search using Tavily API."""
@@ -128,7 +128,7 @@ async def search_web(query: str, max_results: int = 10) -> list[dict]:
     return response if isinstance(response, list) else []
 
 
-# ── HTN Workflow Stages ─────────────────────────────────────────
+# ── HTN Workflow Stages ──────────────────────────────
 
 async def stage_plan(query: str, depth: str = "standard") -> list[str]:
     """Stage 1: Decompose query into sub-topics (depth-aware)."""
@@ -308,7 +308,7 @@ async def stage_cite(report: str, results: list[dict]) -> tuple[str, list[dict]]
     return report + bibliography, sources
 
 
-# ── Endpoints ───────────────────────────────────────────────────
+# ── Endpoints ──────────────────────────────────────
 
 @app.post("/research")
 async def start_research(req: ResearchRequest):

@@ -84,7 +84,7 @@ class HybridRetriever:
         if self._neo4j_driver:
             await self._neo4j_driver.close()
 
-    # ── Public API ──────────────────────────────────────────────
+    # ── Public API ─────────────────────────────────
 
     async def query(
         self,
@@ -188,7 +188,7 @@ class HybridRetriever:
 
         return {"nodes": nodes, "edges": edges}
 
-    # ── Vector Search ───────────────────────────────────────────
+    # ── Vector Search ───────────────────────────────
 
     async def _vector_search(
         self, query: str, document_ids: list[str], top_k: int
@@ -244,7 +244,7 @@ class HybridRetriever:
             for hit in results
         ]
 
-    # ── Graph Search ────────────────────────────────────────────
+    # ── Graph Search ─────────────────────────────
 
     async def _graph_search(
         self, query: str, document_ids: list[str]
@@ -290,7 +290,7 @@ class HybridRetriever:
 
         return triples
 
-    # ── Synthesis ───────────────────────────────────────────────
+    # ── Synthesis ─────────────────────────────────
 
     def _build_synthesis_prompt(
         self,
